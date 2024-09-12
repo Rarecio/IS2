@@ -1,7 +1,5 @@
 package ru.sala.is2.service;
 
-import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,12 +21,11 @@ public class UniversityService {
         universityRepository.save(university);
     }
 
-    public void addIndicator(String universityName, String indicatorName, String indicatorValue) {
-        indicatorRepository.save(new Indicator(indicatorName, indicatorValue));
-        University university = universityRepository.findByName(universityName);
-        if (university == null) {
-            throw new EntityNotFoundException("university: "+universityName + " not found");
-        }
+    public void addIndicator(String universityName, Integer indicatorId, Integer indicatorValue) {
+        Indicator indicator = indicatorRepository.findById(indicatorId).orElseThrow();
+        University university = universityRepository.findByName(universityName).orElseThrow();
+
+
 
     }
 }
